@@ -8,9 +8,16 @@ import readline from 'readline';
 
 await getConsentAnswer();
 
-let savedAutoresIds = null;
-let savedEditorasIds = null;
-let savedLivrosIds = null;
+let savedAutoresIds = [1668317978518, 1668317978529, 1668317978587];
+let savedEditorasIds = [1668317978637, 1668317978695, 1668317978747, 1668317978784];
+let savedLivrosIds = [
+  1668317978848,
+  1668317978863,
+  1668317978959,
+  1668317978997,
+  1668317979071,
+  1668317979128,
+];
 
 const [autor1, autor2, autor3] = savedAutoresIds || [getId(), getId(), getId()];
 const [editora1, editora2, editora3, editora4] = savedEditorasIds || [
@@ -102,7 +109,7 @@ function createOrUpdateFile(file, data) {
   console.log('arquivo', file, 'criado/atualizado');
 }
 function saveCreatedIdsForFutureUses() {
-  const thisFile = fs.readFileSync('createMock.js').toString();
+  const thisFile = fs.readFileSync('createMockUsed.js').toString();
 
   /* eslint-disable no-useless-escape */
   const autoresIdRegex = /let\ssavedAutoresIds[^\]\[\]\n]+;/;

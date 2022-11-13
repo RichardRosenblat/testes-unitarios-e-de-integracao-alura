@@ -36,10 +36,19 @@ const db = (file) => {
             results: cacheFile,
             async insert(obj) {
               pause(10);
+              if (Object.entries(obj).filter(([k]) => k !== 'id' && k !== 'created_at' && k !== 'updated_at').lenght) {
+                throw new Error('Insert object does not contains required values');
+              }
               if (!obj.id) {
                 obj.id = new Date().getTime();
               } else if (cacheFile.map((cacheObj) => cacheObj.id).includes(obj.id)) {
                 throw new Error('Id must be unique');
+              }
+              if (!obj.created_at) {
+                obj.created_at = new Date().toISOString();
+              }
+              if (!obj.updated_at) {
+                obj.updated_at = new Date().toISOString();
               }
               cacheFile.push(JSON.parse(JSON.stringify(obj)));
               saveInFile(path, cacheFile);
