@@ -20,11 +20,11 @@ class Editora {
   }
 
   static async pegarEditoras() {
-    return db.select('*').from('editoras');
+    return (await db().select('*').from('editoras')).results;
   }
 
   static async pegarPeloId(id) {
-    const resultado = await db.select('*').from('editoras').where({ id });
+    const resultado = (await db().select('*').from('editoras').where({ id })).results;
     return resultado[0];
   }
 
@@ -32,22 +32,22 @@ class Editora {
     return db('editoras').insert(this)
       .then((registroCriado) => db('editoras')
         .where('id', registroCriado[0]))
-      .then((registroSelecionado) => new Editora(registroSelecionado[0]));
+      .then((registroSelecionado) => new Editora(registroSelecionado.results[0]));
   }
 
   async atualizar(id) {
     // o update retorna a quantidade de rows atualizados e não o objeto do registro atualizado
-    await db('editoras')
-      .where({ id })
+    await (await db('editoras')
+      .where({ id }))
       .update({ ...this, updated_at: new Date().toISOString() });
 
-    return db.select('*').from('editoras').where({ id });
+    return (await db().select('*').from('editoras').where({ id })).results;
   }
 
   static async excluir(id) {
     // o del retorna a quantidade de rows deletados
-    await db('editoras')
-      .where({ id })
+    await (await db('editoras')
+      .where({ id }))
       .del();
   }
 
@@ -62,8 +62,8 @@ class Editora {
   }
 
   static async pegarLivrosPorEditora(editoraId) {
-    return db('livros')
-      .where({ editora_id: editoraId });
+    return (await db('livros')
+      .where({ editora_id: editoraId })).results;
   }
 }
 

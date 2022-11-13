@@ -10,7 +10,7 @@ class Livro {
     editora_id,
     autor_id,
     created_at,
-    updated_at
+    updated_at,
   }) {
     this.id = null || id;
     this.titulo = titulo;
@@ -22,11 +22,11 @@ class Livro {
   }
 
   static async pegarLivros() {
-    return db.select('*').from('livros');
+    return (await db().select('*').from('livros')).results;
   }
 
   static async pegarPeloId(id) {
-    const resultado = await db.select('*').from('livros').where({ id });
+    const resultado = (await db().select('*').from('livros').where({ id })).results;
     return resultado[0];
   }
 
@@ -34,22 +34,22 @@ class Livro {
     return db('livros').insert(this)
       .then((registroCriado) => db('livros')
         .where('id', registroCriado[0]))
-      .then((registroSelecionado) => new Livro(registroSelecionado[0]));
+      .then((registroSelecionado) => new Livro(registroSelecionado.results[0]));
   }
 
   async atualizar(id) {
     // o update retorna a quantidade de rows atualizados e não o objeto do registro atualizado
-    await db('livros')
-      .where({ id })
+    await (await db('livros')
+      .where({ id }))
       .update({ ...this, updated_at: new Date().toISOString() });
 
-    return db.select('*').from('livros').where({ id });
+    return (await db().select('*').from('livros').where({ id })).results;
   }
 
   static async excluir(id) {
     // o del retorna a quantidade de rows deletados
-    await db('livros')
-      .where({ id })
+    await (await db('livros')
+      .where({ id }))
       .del();
   }
 

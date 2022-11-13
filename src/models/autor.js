@@ -1,5 +1,6 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable camelcase */
+// import db from '../db/dbconfig.js';
 import db from '../db/dbconfig.js';
 
 class Autor {
@@ -8,7 +9,7 @@ class Autor {
     nome,
     nacionalidade,
     created_at,
-    updated_at
+    updated_at,
   }) {
     this.id = null || id;
     this.nome = nome;
@@ -18,34 +19,33 @@ class Autor {
   }
 
   static async pegarAutores() {
-    return db.select('*').from('autores');
+    return (await db().select('*').from('autores')).results;
   }
 
   static async pegarPeloId(id) {
-    const resultado = await db.select('*').from('autores').where({ id });
+    const resultado = (await db().select('*').from('autores').where({ id })).results;
     return resultado[0];
   }
 
   async criar() {
-    return db('autores').insert(this)
-      .then((registroCriado) => db('autores')
-        .where('id', registroCriado[0]))
-      .then((registroSelecionado) => new Autor(registroSelecionado[0]));
+    return db().select().from('autores').insert(this)
+      .then(async (registroCriado) => db('autores').where('id', registroCriado[0]))
+      .then((registroSelecionado) => new Autor(registroSelecionado.results[0]));
   }
 
   async atualizar(id) {
     // o update retorna a quantidade de rows atualizados e não o objeto do registro atualizado
-    await db('autores')
-      .where({ id })
+    await (await db('autores')
+      .where({ id }))
       .update({ ...this, updated_at: new Date().toISOString() });
 
-    return db.select('*').from('autores').where({ id });
+    return (await db().select('*').from('autores').where({ id })).results;
   }
 
   static async excluir(id) {
     // o del retorna a quantidade de rows deletados
-    await db('autores')
-      .where({ id })
+    await (await db('autores')
+      .where({ id }))
       .del();
   }
 
@@ -62,8 +62,8 @@ class Autor {
   }
 
   static async pegarLivrosPorAutor(autorId) {
-    return db('livros')
-      .where({ autor_id: autorId });
+    return (await db('livros')
+      .where({ autor_id: autorId })).results;
   }
 }
 
