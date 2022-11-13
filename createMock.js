@@ -31,7 +31,7 @@ const [livro1, livro2, livro3, livro4, livro5, livro6] = savedLivrosIds || [
 console.log();
 
 console.log('Deletando arquivos sqlite e sql:');
-deleteFileIfExists('src/livraria.sqlite');
+deleteFileIfExists('src/db/livraria.sqlite');
 deleteFileIfExists('populate.sql');
 
 console.log();
