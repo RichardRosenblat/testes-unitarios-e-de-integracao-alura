@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +20,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@babel/preset-env": "^7.20.2",
     "@jest/globals": "28.1.2",
     "eslint": "8.16.0",
     "eslint-config-airbnb-base": "15.0.0",
