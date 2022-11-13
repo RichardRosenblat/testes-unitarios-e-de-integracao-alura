@@ -106,7 +106,7 @@ function getConsentAnswer() {
   });
 }
 function saveCreatedIdsForFutureUses() {
-  const thisFile = fs.readFileSync('createFiles.js').toString();
+  const thisFile = fs.readFileSync('createMock.js').toString();
 
   /* eslint-disable no-useless-escape */
   const autoresIdRegex = /let\ssavedAutoresIds[^\]\[\]\n]+;/;
