@@ -18,7 +18,7 @@ describe('Testando o modelo Editora', () => {
     );
   });
 
-  it('Deve salvar editora no BD', () => {
+  it.skip('Deve salvar editora no BD', () => {
     const editora = new Editora(objetoEditora);
 
     editora.salvar().then((dados) => {
@@ -26,7 +26,7 @@ describe('Testando o modelo Editora', () => {
     });
   });
 
-  it('Deve salvar no BD usando a sintaxe moderna', async () => {
+  it.skip('Deve salvar no BD usando a sintaxe moderna', async () => {
     const editora = new Editora(objetoEditora);
 
     const dados = await editora.salvar();
