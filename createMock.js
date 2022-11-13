@@ -54,7 +54,7 @@ function getConsentAnswer() {
       input: process.stdin,
       output: process.stdout,
     });
-    console.log('Você está prestes a alterar os arquivos da aplicação para utilizar um mock.');
+    console.log('Você está prestes a alterar os arquivos da aplicação para utilizar um mock de base de dados em vez do SQLite.');
     rl.question('Esta ação é irreversível, deseja continuar? (s/n): ', (answer) => {
       resolve(answer);
       rl.close();
